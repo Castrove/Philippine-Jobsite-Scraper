@@ -1,6 +1,6 @@
 from bs4 import BeautifulSoup
 from fake_useragent import UserAgent
-import requests
+import requests, re
 
 url = 'https://www.jobstreet.com.ph/en/job-search/computer-software-it-jobs/'
 headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/96.0.4664.45 Safari/537.36'}
@@ -13,23 +13,28 @@ soup = BeautifulSoup(html_text, 'lxml')
 jobs = soup.find_all('div', class_='sx2jih0 zcydq852 zcydq842 zcydq872 zcydq862 zcydq82a zcydq832 zcydq8d2 zcydq8cq')
 
 for job in jobs:
+    # find published date
+    time = job.find('span', class_='sx2jih0 zcydq82q _18qlyvc0 _18qlyvcx _18qlyvc1 _18qlyvc6').text
+    tim = re.findall('[0-9]+', time)
+    t = int(tim[0])
 
-    # find inside job
-    title = job.find('div', class_='sx2jih0 _2j8fZ_0 sIMFL_0 _1JtWu_0').text.replace(' ','')
-    # find company
-    com = job.find('span', class_='sx2jih0 zcydq82q _18qlyvc0 _18qlyvcv _18qlyvc1 _18qlyvc8').text.replace(' ','')
-    # find location
-    place = job.find('span', class_='sx2jih0 zcydq82q zcydq810 iwjz4h0').text.replace(' ','')
+    if 'h' in time or ('d' in time and t < 12):
 
-    # print(time)
+        # find inside job
+        title = job.find('div', class_='sx2jih0 _2j8fZ_0 sIMFL_0 _1JtWu_0').text.replace(' ','')
+        # find company
+        com = job.find('span', class_='sx2jih0 zcydq82q _18qlyvc0 _18qlyvcv _18qlyvc1 _18qlyvc8').text.replace(' ','')
+        # find location
+        place = job.find('span', class_='sx2jih0 zcydq82q zcydq810 iwjz4h0').text.replace(' ','')
 
+        # print(time)
 
-    print(f'''
-JOB TITLE: {title}
-LOCATION: {com}, {place}   DATE: -time-     
-PAY: -pay-
-    ''')
-    print('\n\n')
+        print(f'''
+    JOB TITLE: {title}
+    LOCATION: {com}, {place}   DATE: {time}     
+    PAY: -pay-
+        ''')
+        print('\n\n')
 
 
 
