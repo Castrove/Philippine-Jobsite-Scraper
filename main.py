@@ -26,7 +26,10 @@ for job in jobs:
         # find location
         place = job.find('span', class_='sx2jih0 zcydq82q zcydq810 iwjz4h0').text.replace(' ','')
         # find salary
-        pay = job.find_all('span', class_='sx2jih0 zcydq82q _18qlyvc0 _18qlyvcv _18qlyvc3 _18qlyvc6')[1].text
+        pay = job.find_all('span', class_='sx2jih0 zcydq82q _18qlyvc0 _18qlyvcv _18qlyvc3 _18qlyvc6')
+        if len(pay) < 2:
+            pay = 'none'
+        else: pay = pay[1].text
         
         
         print(f'''
