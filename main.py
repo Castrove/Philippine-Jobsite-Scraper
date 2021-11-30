@@ -10,13 +10,26 @@ headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/
 html_text = requests.get(url, headers=headers).text
 
 soup = BeautifulSoup(html_text, 'lxml')
-jobs = soup.find('div', class_='sx2jih0 zcydq852 zcydq842 zcydq872 zcydq862 zcydq82a zcydq832 zcydq8d2 zcydq8cq')
+jobs = soup.find_all('div', class_='sx2jih0 zcydq852 zcydq842 zcydq872 zcydq862 zcydq82a zcydq832 zcydq8d2 zcydq8cq')
 
-# find inside job
-title = jobs.find('div', class_='sx2jih0 _2j8fZ_0 sIMFL_0 _1JtWu_0').text
+for job in jobs:
+
+    # find inside job
+    title = job.find('div', class_='sx2jih0 _2j8fZ_0 sIMFL_0 _1JtWu_0').text.replace(' ','')
+    # find company
+    com = job.find('span', class_='sx2jih0 zcydq82q _18qlyvc0 _18qlyvcv _18qlyvc1 _18qlyvc8').text.replace(' ','')
+    # find location
+    place = job.find('span', class_='sx2jih0 zcydq82q zcydq810 iwjz4h0').text.replace(' ','')
+
+    # print(time)
 
 
-print(title)
+    print(f'''
+    JOB TITLE: {title}
+    LOCATION: {com}, {place}   DATE: -time-     
+    PAY: -pay-
+    ''')
+    print('\n\n')
 
 
 
