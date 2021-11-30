@@ -6,6 +6,8 @@ headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/
 # your version here: chrome://settings/help
 # update here: https://www.whatismybrowser.com/guides/the-latest-user-agent/chrome
 
+site = re.search('(https://www.)([A-Za-z_0-9.-]+)', url)[0]
+
 html_text = requests.get(url, headers=headers).text
 
 soup = BeautifulSoup(html_text, 'lxml')
@@ -30,13 +32,17 @@ for job in jobs:
         if len(pay) < 2:
             pay = 'none'
         else: pay = pay[1].text
+        # find link
+        link = job.find('a', href=True)
+        
         
         
         print(f'''
     JOB TITLE: {title}
     LOCATION: {com}, {place}   DATE: {time}     
     PAY: {pay}
-        ''')
+     
+    LINK: {site}{link['href']}   ''')
         print('\n\n')
 
 
