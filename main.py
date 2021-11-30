@@ -25,9 +25,9 @@ for job in jobs:
 
 
     print(f'''
-    JOB TITLE: {title}
-    LOCATION: {com}, {place}   DATE: -time-     
-    PAY: -pay-
+JOB TITLE: {title}
+LOCATION: {com}, {place}   DATE: -time-     
+PAY: -pay-
     ''')
     print('\n\n')
 
