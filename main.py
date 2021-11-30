@@ -7,9 +7,16 @@ headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/
 # your version here: chrome://settings/help
 # update here: https://www.whatismybrowser.com/guides/the-latest-user-agent/chrome
 
-html_text = requests.get(url, headers=headers)
-print(html_text)
+html_text = requests.get(url, headers=headers).text
 
+soup = BeautifulSoup(html_text, 'lxml')
+jobs = soup.find('div', class_='sx2jih0 zcydq852 zcydq842 zcydq872 zcydq862 zcydq82a zcydq832 zcydq8d2 zcydq8cq')
+
+# find inside job
+title = jobs.find('div', class_='sx2jih0 _2j8fZ_0 sIMFL_0 _1JtWu_0').text
+
+
+print(title)
 
 
 
