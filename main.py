@@ -1,5 +1,4 @@
 from bs4 import BeautifulSoup
-from fake_useragent import UserAgent
 import requests, re
 
 url = 'https://www.jobstreet.com.ph/en/job-search/computer-software-it-jobs/'
@@ -26,13 +25,14 @@ for job in jobs:
         com = job.find('span', class_='sx2jih0 zcydq82q _18qlyvc0 _18qlyvcv _18qlyvc1 _18qlyvc8').text.replace(' ','')
         # find location
         place = job.find('span', class_='sx2jih0 zcydq82q zcydq810 iwjz4h0').text.replace(' ','')
-
-        # print(time)
-
+        # find salary
+        pay = job.find_all('span', class_='sx2jih0 zcydq82q _18qlyvc0 _18qlyvcv _18qlyvc3 _18qlyvc6')[1].text
+        
+        
         print(f'''
     JOB TITLE: {title}
     LOCATION: {com}, {place}   DATE: {time}     
-    PAY: -pay-
+    PAY: {pay}
         ''')
         print('\n\n')
 
