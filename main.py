@@ -9,20 +9,27 @@ def filter(targ_sal, place, offer):
     sal_ok = True
     for i in range(len(far)):
                 if far[i] in place.upper():
-                    print(far[i], place)
                     dist_ok = False
                     break
-    
-    if offer == 'none':
-        print('none')
+
+    if offer == 0:
+        offer = 'None'
     elif offer < targ_sal:
-        print(offer, 'bad')
         sal_ok = False
-    elif offer >= targ_sal:
-        print(offer, 'good')
     
     if sal_ok == True and dist_ok ==True:
-        return offer, place
+        return True, offer
+    else: 
+        return False, offer
+
+
+def result(info):
+    print(f'''-------------
+JOB TITLE: {info[1]}
+LOCATION: {info[2]} | {info[3]}   DATE: {info[0]}     
+PAY: {info[5]}
+
+link: {info[4]}\n-------------\n''')
 
 url = 'https://www.jobstreet.com.ph/en/job-search/computer-software-it-jobs/'
 headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/96.0.4664.45 Safari/537.36'}
@@ -50,30 +57,31 @@ for job in jobs:
         com = job.find('span', class_='sx2jih0 zcydq82q _18qlyvc0 _18qlyvcv _18qlyvc1 _18qlyvc8').text
         # find location
         place = job.find('span', class_='sx2jih0 zcydq82q zcydq810 iwjz4h0').text
+        # find link
+        href = job.div.h1.a['href']
+        if site not in href:
+            link = site + href
+        else:
+            link = href
         # find salary
         pay = job.find_all('span', class_='sx2jih0 zcydq82q _18qlyvc0 _18qlyvcv _18qlyvc3 _18qlyvc6')
         if len(pay) < 2:
-            pay = 'none'
+            pay = 0
         else: 
             pay = re.search('\d+', pay[1].text)
             pay = int(pay.group(0))
 
-        filter(min_salary_k, place, pay)
+        approb, pay = filter(min_salary_k, place, pay)
 
-#         if match == True:
-                  
+        info = []
+
+        if approb == True:
+            print('abbrob')
+            info.extend([time, title, com, place, link, pay])
+            result(info)
+        else:
+            print('no\n')
+            continue
         
-#             # find link
-#             href = job.div.h1.a['href']
-#             if site not in href:
-#                 link = site + href
-#             else:
-#                 link = href
 
-#             print(f'''-------------
-# JOB TITLE: {title}
-# LOCATION: {com} | {place}   DATE: {time}     
-# PAY: {pay}
-
-# link: {link}\n-------------''')
 
