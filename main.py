@@ -4,7 +4,7 @@ import requests, re
 far = ['NATIONAL', 'CEBU','ILOILO']
 min_salary_k = 40
 
-def filter(targ_sal, place, offer) :
+def filter(targ_sal, place, offer):
     dist_ok = True
     sal_ok = True
     for i in range(len(far)):
@@ -22,9 +22,7 @@ def filter(targ_sal, place, offer) :
         print(offer, 'good')
     
     if sal_ok == True and dist_ok ==True:
-        print('OK')
-
-    print()
+        return offer, place
 
 url = 'https://www.jobstreet.com.ph/en/job-search/computer-software-it-jobs/'
 headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/96.0.4664.45 Safari/537.36'}
