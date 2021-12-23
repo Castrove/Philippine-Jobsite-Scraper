@@ -2,3 +2,4 @@ scraper_env
 applications.txt
 applications.csv
 jobs.json
+__pycache__
