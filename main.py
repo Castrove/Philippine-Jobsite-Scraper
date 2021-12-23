@@ -1,5 +1,5 @@
 from bs4 import BeautifulSoup
-import requests, re
+import requests, re, csv
 
 far = ['NATIONAL', 'CEBU','ILOILO']
 min_salary_k = 40
@@ -24,13 +24,10 @@ def filter(targ_sal, place, offer):
 
 
 def result(info):
-    with open('applications.txt', 'a') as f:
-        f.write(f'''-------------
-JOB TITLE: {info[1]}
-LOCATION: {info[2]} | {info[3]}   DATE: {info[0]}     
-PAY: {info[5]}
-
-link: {info[4]}\n-------------\n''')
+    with open('applications.csv', 'a', encoding='utf8', newline = '') as f:
+        writer = csv.writer(f)
+        writer.writerow(info)
+        
 
 url = 'https://www.jobstreet.com.ph/en/job-search/computer-software-it-jobs/'
 headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/96.0.4664.45 Safari/537.36'}
@@ -44,9 +41,11 @@ html_text = requests.get(url, headers=headers).text
 soup = BeautifulSoup(html_text, 'lxml')
 jobs = soup.find_all('div', class_='sx2jih0 zcydq852 zcydq842 zcydq872 zcydq862 zcydq82a zcydq832 zcydq8d2 zcydq8cq')
 
-with open('applications.txt', 'w') as f:
-    pass
-
+with open('applications.csv', 'w') as f:
+    writer = csv.writer(f)
+    header = ['Date', 'Title', 'Company', 'Location', 'Pay', 'Link']
+    writer.writerow(header)
+    
 for job in jobs:
     # find published date
     time = job.find('span', class_='sx2jih0 zcydq82q _18qlyvc0 _18qlyvcx _18qlyvc1 _18qlyvc6').text
@@ -77,11 +76,10 @@ for job in jobs:
 
         display, pay = filter(min_salary_k, place, pay)
 
-        info = []
+        info = [time, title, com, place, pay, link]
 
         if display == True:
             print('abbrob')
-            info.extend([time, title, com, place, link, pay])
             result(info)
         else:
             print(f'{time} {place} {pay}\n')
