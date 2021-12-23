@@ -71,16 +71,16 @@ for job in jobs:
             pay = re.search('\d+', pay[1].text)
             pay = int(pay.group(0))
 
-        approb, pay = filter(min_salary_k, place, pay)
+        display, pay = filter(min_salary_k, place, pay)
 
         info = []
 
-        if approb == True:
+        if display == True:
             print('abbrob')
             info.extend([time, title, com, place, link, pay])
             result(info)
         else:
-            print('no\n')
+            print(f'{time} {place} {pay}\n')
             continue
         
 
