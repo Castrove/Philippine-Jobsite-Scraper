@@ -1,5 +1,5 @@
 from bs4 import BeautifulSoup
-import requests, re, csv
+import requests, re, csv, sheet
 
 far = ['NATIONAL', 'CEBU','ILOILO']
 min_salary_k = 40
@@ -27,6 +27,7 @@ def result(info):
     with open('applications.csv', 'a', encoding='utf8', newline = '') as f:
         writer = csv.writer(f)
         writer.writerow(info)
+    sheet.insert(info)
         
 
 url = 'https://www.jobstreet.com.ph/en/job-search/computer-software-it-jobs/'

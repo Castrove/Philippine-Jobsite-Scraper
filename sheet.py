@@ -12,4 +12,4 @@ sheet = client.open("jobs").sheet1
 
 def insert(info):
     row = info
-    sheet.insert_row(row, 1)
+    sheet.insert_row(row, 2)
