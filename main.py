@@ -24,7 +24,8 @@ def filter(targ_sal, place, offer):
 
 
 def result(info):
-    print(f'''-------------
+    with open('applications.txt', 'a') as f:
+        f.write(f'''-------------
 JOB TITLE: {info[1]}
 LOCATION: {info[2]} | {info[3]}   DATE: {info[0]}     
 PAY: {info[5]}
@@ -42,6 +43,9 @@ html_text = requests.get(url, headers=headers).text
 
 soup = BeautifulSoup(html_text, 'lxml')
 jobs = soup.find_all('div', class_='sx2jih0 zcydq852 zcydq842 zcydq872 zcydq862 zcydq82a zcydq832 zcydq8d2 zcydq8cq')
+
+with open('applications.txt', 'w') as f:
+    pass
 
 for job in jobs:
     # find published date
