@@ -43,8 +43,10 @@ jobs = soup.find_all('div', class_='sx2jih0 zcydq852 zcydq842 zcydq872 zcydq862 
 
 with open('applications.csv', 'w') as f:
     writer = csv.writer(f)
+    
     header = ['Date', 'Title', 'Company', 'Location', 'Pay', 'Link']
     writer.writerow(header)
+
     
 for job in jobs:
     # find published date
